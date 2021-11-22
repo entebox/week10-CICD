@@ -1,0 +1,30 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: weighttracker 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: weighttracker
+  template:
+    metadata:
+      labels:
+        app: weighttracker 
+    spec:
+      containers:
+        - name: weighttracker 
+          image: week10acr.azurecr.io/weighttracker
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+          imagePullPolicy: "Always"
+          ports:
+          - containerPort: 80
+          envFrom:
+          - secretRef:
+             name: secret-production
